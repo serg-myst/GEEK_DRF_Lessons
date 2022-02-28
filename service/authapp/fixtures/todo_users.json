@@ -1,0 +1,72 @@
+[
+  {
+    "model": "todo.todousers",
+    "fields": {
+      "username": "Shean_Bin",
+      "first_name": "Shean",
+      "last_name": "Bin",
+      "birthday_year": "2001",
+      "email": "s.bin@gmail.com"
+    }
+  },
+  {
+    "model": "todo.todouser",
+    "fields": {
+      "username": "Bil_Cl",
+      "first_name": "Bil",
+      "last_name": "Clinton",
+      "birthday_year": "1954",
+      "email": "b.clinton@gmail.com"
+    }
+  },
+  {
+    "model": "todo.todouser",
+    "fields": {
+      "username": "Bob_D",
+      "first_name": "Bob",
+      "last_name": "Dylan",
+      "birthday_year": "1948",
+      "email": "b.dylan@gmail.com"
+    }
+  },
+  {
+    "model": "todo.todouser",
+    "fields": {
+      "username": "Mary_C",
+      "first_name": "Mary",
+      "last_name": "Cay",
+      "birthday_year": "1987",
+      "email": "m.cay@gmail.com"
+    }
+  },
+ {
+    "model": "todo.todouser",
+    "fields": {
+      "username": "Sam_S",
+      "first_name": "Sam",
+      "last_name": "Smith",
+      "birthday_year": "1995",
+      "email": "s.smith@gmail.com"
+    }
+  },
+ {
+    "model": "todo.todouser",
+    "fields": {
+      "username": "John_St",
+      "first_name": "John",
+      "last_name": "Strangers",
+      "birthday_year": "1998",
+      "email": "j.strangers@gmail.com"
+    }
+  },
+  {
+    "model": "todo.todouser",
+    "fields": {
+      "username": "Mike_Bl",
+      "first_name": "Mike",
+      "last_name": "Blum",
+      "birthday_year": "2005",
+      "email": "m.blum@gmail.com"
+    }
+  }
+]
