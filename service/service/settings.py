@@ -38,6 +38,9 @@ INSTALLED_APPS = [
 
     'rest_framework',  # Lesson_1 подключаем установленное приложение Django-REST
     'authapp',  # Lesson_1 подключаем новое приложение (django-admin startapp authapp)
+
+    'corsheaders',  # Lesson_2 Обязательно, иначе бэк и фронт работать не будут
+
 ]
 
 MIDDLEWARE = [
@@ -48,6 +51,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',  # Lesson_2 Обязательно, иначе бэк и фронт работать не будут
+    'django.middleware.common.CommonMiddleware',  # Lesson_2 Обязательно, иначе бэк и фронт работать не будут
+
 ]
 
 ROOT_URLCONF = 'service.urls'
@@ -117,3 +124,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'authapp.TodoUser'
+
+# Lesson_2 Обязательно, иначе бэк и фронт работать не будут
+CORS_ALLOWED_ORIGINS = [
+   "http://localhost:3000",
+]
+
