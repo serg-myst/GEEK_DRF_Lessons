@@ -41,6 +41,8 @@ INSTALLED_APPS = [
 
     'corsheaders',  # Lesson_2 Обязательно, иначе бэк и фронт работать не будут
 
+    'todonotes',  # Lesson_3 Новое приложение
+
 ]
 
 MIDDLEWARE = [
@@ -127,6 +129,15 @@ AUTH_USER_MODEL = 'authapp.TodoUser'
 
 # Lesson_2 Обязательно, иначе бэк и фронт работать не будут
 CORS_ALLOWED_ORIGINS = [
-   "http://localhost:3000",
+    "http://localhost:3000",
 ]
 
+# Lesson_3
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',  # Выводим на страницу чистый JSON (ну в понятиях python словарь)
+        'rest_framework.renderers.BrowsableAPIRenderer',  # Lesson_3 Это интерфейс API. Перекрывает верхнюю строку
+        # 'rest_framework.renderers.StaticHTMLIRenderer',  # Lesson_3 Это какая-то дичь. Надо разбираться
+        # 'rest_framework.renderers.AdminRenderer',  # Lesson_3 Это админский интерфейс
+    ]
+}
