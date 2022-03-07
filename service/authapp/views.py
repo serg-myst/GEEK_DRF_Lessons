@@ -5,6 +5,13 @@ from .serializers import AuthappModelSerializer
 
 
 # Create your views here.
+def index(request):
+    context = {
+        'path': request.get_host(),
+    }
+    return render(request, 'authapp/index.html', context)
+
+
 class TodoModelViewSet(ModelViewSet):
     queryset = TodoUser.objects.all()
     serializer_class = AuthappModelSerializer
