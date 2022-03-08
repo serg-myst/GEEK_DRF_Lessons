@@ -17,10 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter  # Lesson_1
 from authapp.views import TodoModelViewSet  # Lesson_1
+from todonotes.views import ProjectModelViewSet, TodoNoteModelViewSet  # Lesson_3
 from authapp import views
+
 
 router = DefaultRouter()
 router.register('todo', TodoModelViewSet)
+router.register('todoprojects', ProjectModelViewSet)
+router.register('todonotes', TodoNoteModelViewSet)
 
 urlpatterns = [
     path('', views.index, name='index'),
