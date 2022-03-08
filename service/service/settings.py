@@ -133,11 +133,26 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # Lesson_3
+# Для CamelCase https://github.com/vbabiy/djangorestframework-camel-case
+
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',  # Выводим на страницу чистый JSON (ну в понятиях python словарь)
         'rest_framework.renderers.BrowsableAPIRenderer',  # Lesson_3 Это интерфейс API. Перекрывает верхнюю строку
         # 'rest_framework.renderers.StaticHTMLIRenderer',  # Lesson_3 Это какая-то дичь. Надо разбираться
         # 'rest_framework.renderers.AdminRenderer',  # Lesson_3 Это админский интерфейс
+
+        # Lesson_3
+        # 'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+        # 'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
     ]
+    # ,
+    #'DEFAULT_PARSER_CLASSES': [
+    #    # If you use MultiPartFormParser or FormParser, we also have a camel case version
+    #    'djangorestframework_camel_case.parser.CamelCaseFormParser',
+    #    'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
+    #    'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+    #    # Any other parsers
+    #],
 }
+

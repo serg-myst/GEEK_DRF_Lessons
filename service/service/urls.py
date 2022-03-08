@@ -20,6 +20,7 @@ from authapp.views import TodoModelViewSet  # Lesson_1
 from todonotes.views import ProjectModelViewSet, TodoNoteModelViewSet  # Lesson_3
 from authapp import views
 
+
 router = DefaultRouter()
 router.register('todo', TodoModelViewSet)
 router.register('todoprojects', ProjectModelViewSet)
