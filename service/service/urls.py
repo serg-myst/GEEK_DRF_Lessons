@@ -31,4 +31,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),  # Lesson_1 в дальнейшем будем использовать
     path('api/', include(router.urls)),  # Lesson_1
+
+    path('views/api-todo-users/', views.TodoUsersAPIVIew.as_view()),  # Lesson_4  Пример работы с APIView
 ]
