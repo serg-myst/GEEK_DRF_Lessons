@@ -7,4 +7,4 @@ class AuthappModelSerializer(ModelSerializer):
     class Meta:
         model = TodoUser
         # fields = '__all__'  # По домашнему заданию написано выбрать не все поля.
-        fields = ('id', 'url', 'username', 'first_name', 'last_name', 'email')
+        fields = ('id', 'username', 'first_name', 'last_name', 'email')  # 'url',
