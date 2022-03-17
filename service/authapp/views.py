@@ -10,6 +10,9 @@ from rest_framework.response import Response
 from rest_framework import status  # https://www.django-rest-framework.org/tutorial/3-class-based-views/
 from django.http import Http404  # https://www.django-rest-framework.org/tutorial/3-class-based-views/
 
+from rest_framework.pagination import LimitOffsetPagination  # Lesson_4
+from authapp.pagination import PaginationHandlerMixin
+
 
 # Create your views here.
 def index(request):
@@ -19,23 +22,44 @@ def index(request):
     return render(request, 'authapp/index.html', context)
 
 
+# Lesson_4 Подключаем пагинацию
+class TodoUsersLimitOffsetPagination(LimitOffsetPagination):
+    default_limit = 2
+
+
 # Lesson_3
 class TodoModelViewSet(ModelViewSet):
     queryset = TodoUser.objects.all()
     serializer_class = AuthappModelSerializer
+    pagination_class = TodoUsersLimitOffsetPagination  # Lesson_4
 
 
 # Lesson_4
 # Наследуемся от класса APIView Это базовый класс для Views в DRF. Он может быть связан с
 # другими частями DRF (например, Renderers) и позволяет полностью самостоятельно написать код
 # обработки того или иного запроса
-class TodoUsersAPIVIew(APIView):
+# Работа с пагинацией
+# https://medium.com/@fk26541598fk/django-rest-framework-apiview-implementation-pagination-mixin-c00c34da8ac2
+# https://django.fun/docs/django-rest-framework/ru/3.12/api-guide/pagination/
+class TodoUsersAPIVIew(APIView, PaginationHandlerMixin):
     renderer_classes = [JSONRenderer]
+    pagination_class = TodoUsersLimitOffsetPagination
+    serializer_class = AuthappModelSerializer
 
-    def get(self, request, format=None):
+    def get(self, request, format=None, *args, **kwargs):
         todo_users = TodoUser.objects.all()
-        serializer = AuthappModelSerializer(todo_users, context={'request': request}, many=True)
-        return Response(serializer.data)
+        # serializer = AuthappModelSerializer(todo_users, context={'request': request}, many=True)
+        # serializer = self.serializer_class(todo_users, many=True)
+        # return Response(serializer.data,status=status.HTTP_200_OK)
+
+        # Подключаем пагинацию
+        page = self.paginate_queryset(todo_users)
+        if page is not None:
+            serializer = self.get_paginated_response(self.serializer_class(page,
+                                                                           many=True).data)
+        else:
+            serializer = self.serializer_class(todo_users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     # Lesson_4 Запрос на запись данных в базу POST. Здесь для примера по ТЗ не нужен
     # def post(self, request, format=None):

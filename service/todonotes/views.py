@@ -15,6 +15,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework import status  # https://www.django-rest-framework.org/tutorial/3-class-based-views/
 from rest_framework import viewsets  # Lesson_4
+from rest_framework.pagination import LimitOffsetPagination  # Lesson_4
 
 from authapp.models import TodoUser
 
@@ -26,17 +27,28 @@ class NoUnderscoreBeforeNumberCamelCaseJSONParser(CamelCaseJSONParser):
     json_underscoreize = {'no_underscore_before_number': True}
 
 
+# Lesson_4 Подключаем пагинацию. Для проектов ограничение 10
+class ProjectLimitOffsetPagination(LimitOffsetPagination):
+    default_limit = 10
+
+
+class TodoNoteLimitOffsetPagination(LimitOffsetPagination):
+    default_limit = 1
+
+
 class ProjectModelViewSet(ModelViewSet):
     # renderer_classes = [AdminRenderer]  # Lesson_3 Вывод на экран через собственную админку (встроенная)
     # renderer_classes = [CamelCaseJSONRenderer]  # Lesson_3 Вывод на экран через собственную админку (встроенная)
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    pagination_class = ProjectLimitOffsetPagination
     # parser_classes = (NoUnderscoreBeforeNumberCamelCaseJSONParser,)  # Lesson_3
 
 
 class TodoNoteModelViewSet(ModelViewSet):
     queryset = TodoNote.objects.all()
     serializer_class = TodoNoteSerializer
+    pagination_class = TodoNoteLimitOffsetPagination
 
 
 # Lesson_4 Запросы к таблицу Project построим на Generic Views
