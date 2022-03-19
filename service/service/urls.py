@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter  # Lesson_1
+from rest_framework.routers import DefaultRouter  # Lesson_1
 from authapp.views import TodoModelViewSet  # Lesson_1
 from todonotes.views import ProjectModelViewSet, TodoNoteModelViewSet  # Lesson_3
 from authapp import views
@@ -41,4 +42,7 @@ urlpatterns = [
     path('generic/api-projects/delete/<str:pk>/', ProjectAPIViewDelete.as_view()),  # Lesson_4  Generic Views
     path('generic/api-projects/update/<str:pk>/', ProjectAPIViewUpdate.as_view()),  # Lesson_4  Generic Views
     path('generic/api-projects/create/', ProjectAPIViewCreate.as_view()),  # Lesson_4  Generic Views
+
+    # Lesson_4 для фильтрации через kwargs. /<str:name>/ Придет как словарь и выкусим параметр запроса
+    path('generic/api-projects/list/<str:name>/', ProjectAPIViewList.as_view()),
 ]

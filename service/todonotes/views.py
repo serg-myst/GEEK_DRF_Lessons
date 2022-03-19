@@ -15,9 +15,14 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework import status  # https://www.django-rest-framework.org/tutorial/3-class-based-views/
 from rest_framework import viewsets  # Lesson_4
-from rest_framework.pagination import LimitOffsetPagination  # Lesson_4
 
 from authapp.models import TodoUser
+
+from rest_framework.pagination import LimitOffsetPagination  # Lesson_4
+
+from .filters import ProjectFilter, TodoNoteFilter  # Lesson_4 Работа с фильтром
+
+from datetime import datetime
 
 
 # Create your views here.
@@ -33,7 +38,7 @@ class ProjectLimitOffsetPagination(LimitOffsetPagination):
 
 
 class TodoNoteLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = 1
+    default_limit = 20
 
 
 class ProjectModelViewSet(ModelViewSet):
@@ -43,19 +48,50 @@ class ProjectModelViewSet(ModelViewSet):
     serializer_class = ProjectSerializer
     pagination_class = ProjectLimitOffsetPagination
     # parser_classes = (NoUnderscoreBeforeNumberCamelCaseJSONParser,)  # Lesson_3
+    filterset_class = ProjectFilter
 
 
 class TodoNoteModelViewSet(ModelViewSet):
     queryset = TodoNote.objects.all()
     serializer_class = TodoNoteSerializer
     pagination_class = TodoNoteLimitOffsetPagination
+    filterset_class = TodoNoteFilter
 
 
 # Lesson_4 Запросы к таблицу Project построим на Generic Views
+# Следующий уровень APIView. Уже содержит в себе get обработчик
 class ProjectAPIViewList(ListAPIView):
-    renderer_classes = [JSONRenderer]
+    # renderer_classes = [JSONRenderer]
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    pagination_class = ProjectLimitOffsetPagination
+
+    # Используем библиотеку django-filter. В стандартном интерфейсе появится кнопка Filters
+    # filterset_fields = ['name', 'description']
+
+    # Собственные фильтры в файле filters.py В данном случае по словосочетанию в имени
+    # https://django-filter.readthedocs.io/en/latest/index.html
+    filterset_class = ProjectFilter
+
+    # Это способ без использования библиотеки django-filter
+    # def get_queryset(self):
+    # Работа через параметры
+    # return Project.objects.filter(name__contains='git') # Пример
+    #    name = self.request.query_params['name'][0]
+    # Приходит в виде кода из url ?name=Name&car=Ferrari
+    # {'name': ['Name'], 'car': 'Ferrari'} - приходит словарь
+    # Приход в виде кода из url ?name=Name&name=Ferrari
+    # {'name': ['Name',Ferrari']} - приходит словарь
+
+    # работа через Headers. Заголовки http запроса
+    #    name = self.request.headers.get('name')
+    # {'Content-Length': '', 'Content-type': 'text/plain', 'Name': 'Alex' и т.д.}
+
+    # Работа через kwargs. Передаем текст фильтра в самом url.
+    # Обязательно прописать в маршрутах. path('generic/api-projects/list/<str:name>/'
+    #    name = self.kwargs['name']
+
+    #    return Project.objects.filter(name__contains=name)
 
 
 class ProjectAPIViewDelete(DestroyAPIView):
@@ -111,10 +147,27 @@ class ProjectAPIViewDetail(RetrieveAPIView):
 # Lesson_4 CRUD для TodoNote
 # https://www.django-rest-framework.org/api-guide/viewsets/
 class TodoNoteAPIViewSet(viewsets.ViewSet):
-    renderer_classes = [JSONRenderer]
+    # renderer_classes = [JSONRenderer]
+    pagination_class = TodoNoteLimitOffsetPagination
+
+    def get_date_from_str(self, date):
+        return datetime.strptime(date, '%Y-%m-%dT%H:%M:%S.%f')
 
     def list(self, request):
-        todo_notes = TodoNote.objects.all()
+        # Lesson_4 Получим параметры из запроса
+        # Пример строки запроса:
+        # http://127.0.0.1:8000/api/todonotes-api/?create_date_gt=2022-03-16T12:31:42.857710&create_date_lt=2022-03-18T12:31:42.857710&/
+        create_timestamp_gt = self.request.query_params.get('create_date_gt')
+        create_timestamp_lt = self.request.query_params.get('create_date_lt')
+
+        if create_timestamp_gt and create_timestamp_lt:
+            print(self.get_date_from_str(create_timestamp_gt))
+            todo_notes = TodoNote.objects.filter(create_timestamp__range=(
+                self.get_date_from_str(create_timestamp_gt),
+                self.get_date_from_str(create_timestamp_lt)))
+        else:
+            todo_notes = TodoNote.objects.all()
+
         serializer = TodoNoteSerializer(todo_notes, many=True)
         return Response(serializer.data)
 
