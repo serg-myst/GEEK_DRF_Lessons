@@ -43,6 +43,8 @@ INSTALLED_APPS = [
 
     'todonotes',  # Lesson_3 Новое приложение
 
+    'django_filters', # Lesson_4 Обязательно для использования библиотеки pip install django-filter
+
 ]
 
 MIDDLEWARE = [
@@ -145,14 +147,19 @@ REST_FRAMEWORK = {
         # Lesson_3
         # 'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
         # 'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
-    ]
+    ],
+
+    # Lesson_4 Подключаем пагинацию и фильтры
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100
+
     # ,
-    #'DEFAULT_PARSER_CLASSES': [
+    # 'DEFAULT_PARSER_CLASSES': [
     #    # If you use MultiPartFormParser or FormParser, we also have a camel case version
     #    'djangorestframework_camel_case.parser.CamelCaseFormParser',
     #    'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
     #    'djangorestframework_camel_case.parser.CamelCaseJSONParser',
     #    # Any other parsers
-    #],
+    # ],
 }
-
