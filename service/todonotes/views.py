@@ -42,6 +42,7 @@ class TodoNoteLimitOffsetPagination(LimitOffsetPagination):
 
 
 class ProjectModelViewSet(ModelViewSet):
+    renderer_classes = [JSONRenderer]
     # renderer_classes = [AdminRenderer]  # Lesson_3 Вывод на экран через собственную админку (встроенная)
     # renderer_classes = [CamelCaseJSONRenderer]  # Lesson_3 Вывод на экран через собственную админку (встроенная)
     queryset = Project.objects.all()
@@ -52,6 +53,7 @@ class ProjectModelViewSet(ModelViewSet):
 
 
 class TodoNoteModelViewSet(ModelViewSet):
+    renderer_classes = [JSONRenderer]
     queryset = TodoNote.objects.all()
     serializer_class = TodoNoteSerializer
     pagination_class = TodoNoteLimitOffsetPagination
@@ -61,7 +63,7 @@ class TodoNoteModelViewSet(ModelViewSet):
 # Lesson_4 Запросы к таблицу Project построим на Generic Views
 # Следующий уровень APIView. Уже содержит в себе get обработчик
 class ProjectAPIViewList(ListAPIView):
-    # renderer_classes = [JSONRenderer]
+    renderer_classes = [JSONRenderer]
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     pagination_class = ProjectLimitOffsetPagination

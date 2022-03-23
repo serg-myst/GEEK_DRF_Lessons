@@ -5,10 +5,9 @@ const Header = () => {
     return (
     <header>
         <ul>
-            <li>Домой</li>
-            <li>Пользователи</li>
-            <li>Сообщения</li>
-            <li>API</li>
+            <li>Меню</li>
+            <li>Контакты</li>
+            <li>О сайте</li>
         </ul>
     </header>
     )

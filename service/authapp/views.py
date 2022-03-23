@@ -24,7 +24,7 @@ def index(request):
 
 # Lesson_4 Подключаем пагинацию
 class TodoUsersLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = 2
+    default_limit = 20
 
 
 # Lesson_3
