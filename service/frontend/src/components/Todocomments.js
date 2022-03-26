@@ -1,45 +1,45 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 
-const UserItem = ({user}) => {
+const TodoItem = ({todo}) => {
     return (
         <tr>
             <td>
-                {user.username}
+                {todo.project.name}
             </td>
             <td>
-                {user.email}
+                {todo.user.username}
             </td>
             <td>
-                {user.first_name}
+                {todo.note_text}
             </td>
             <td>
-                {user.last_name}
+                {todo.create_timestamp}
             </td>
         </tr>
     )
 }
 
-const UserList = ({todo_users}) => {
+const TodoList = ({todo_notes}) => {
     return (
         <div>
-            <h2>Список пользователей</h2>
+            <h2>Сообщения пользователей</h2>
             <table>
                 <tr>
                     <th>
-                        Name
+                        Project
                     </th>
                     <th>
-                        email
+                        User
                     </th>
                     <th>
-                        First name
+                        Note
                     </th>
                     <th>
-                        Last name
+                        Date
                     </th>
                 </tr>
-                {todo_users.map((user) => <UserItem user={user}/>)}
+                {todo_notes.map((todo) => <TodoItem todo={todo}/>)}
             </table>
              <div>
                 <Link to='/'>На главную</Link>
@@ -48,5 +48,4 @@ const UserList = ({todo_users}) => {
     )
 }
 
-
-export default UserList
+export default TodoList

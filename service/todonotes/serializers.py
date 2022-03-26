@@ -26,4 +26,4 @@ class TodoNoteSerializer(ModelSerializer):
 
     class Meta:
         model = TodoNote
-        fields = '__all__'
+        fields = ('project', 'user', 'note_text', 'create_timestamp')
