@@ -1,0 +1,8 @@
+﻿Django JWT:
+https://habr.com/ru/post/538040/
+https://code.tutsplus.com/ru/tutorials/how-to-authenticate-with-jwt-in-django--cms-30460
+https://jpadilla.github.io/django-rest-framework-jwt/
+https://www.techiediaries.com/auth0-jwt-django-rest/
+
+
+https://django.fun/tutorials/registraciya-i-avtorizaciya-polzovatelej-v-django-s-pomoshyu-djoser-i-veb-tokenov-json/

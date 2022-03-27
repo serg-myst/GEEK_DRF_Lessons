@@ -23,6 +23,9 @@ from authapp import views
 from todonotes.views import ProjectAPIViewList, ProjectAPIViewDetail, ProjectAPIViewDelete, \
     ProjectAPIViewUpdate, ProjectAPIViewCreate, TodoNoteAPIViewSet # Lesson_4
 
+# Lesson_6
+from rest_framework.authtoken import views as token_views
+
 router = DefaultRouter()
 router.register('todo', TodoModelViewSet)
 router.register('todoprojects', ProjectModelViewSet)
@@ -45,4 +48,7 @@ urlpatterns = [
 
     # Lesson_4 для фильтрации через kwargs. /<str:name>/ Придет как словарь и выкусим параметр запроса
     path('generic/api-projects/list/<str:name>/', ProjectAPIViewList.as_view()),
+
+    # Lesson_6 url для получения токена
+    path('api-token-auth/', token_views.obtain_auth_token)
 ]

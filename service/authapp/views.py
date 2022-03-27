@@ -13,6 +13,19 @@ from django.http import Http404  # https://www.django-rest-framework.org/tutoria
 from rest_framework.pagination import LimitOffsetPagination  # Lesson_4
 from authapp.pagination import PaginationHandlerMixin
 
+# Lesson_6. Права
+# AllowAny — доступ есть у всех пользователей, включая неавторизованных
+# IsAuthenticated — доступ есть только у авторизованных пользователей
+# IsAdminUser — доступ есть только у администратора.
+# IsAuthenticatedOrReadOnly — доступ есть у авторизованных пользователей, у
+# неавторизованных — доступ только на просмотр данных
+# DjangoModelPermissions — использует систему прав Django на модели. Для каждой модели у
+# пользователя могут быть права add, change, delete, view
+# DjangoModelPermissionsOrReadOnly — аналогично DjangoModelPermissions, но с правом на
+# просмотр у пользователей, не обладающих другими правами.
+
+from rest_framework.permissions import AllowAny
+
 
 # Create your views here.
 def index(request):
@@ -45,6 +58,7 @@ class TodoUsersAPIVIew(APIView, PaginationHandlerMixin):
     renderer_classes = [JSONRenderer]
     pagination_class = TodoUsersLimitOffsetPagination
     serializer_class = AuthappModelSerializer
+    permission_classes = [AllowAny]
 
     def get(self, request, format=None, *args, **kwargs):
         todo_users = TodoUser.objects.all()

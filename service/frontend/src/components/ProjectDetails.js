@@ -13,43 +13,51 @@ const ProjectDetails = ({todo_projects}) => {
         <div>
             <h2>Подробно о проекте "{filtered_project[0].name}"</h2>
             <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Href</th>
-                </tr>
-                <tr>
-                    <td>
-                        {filtered_project[0].name}
-                    </td>
-                    <td>
-                        {filtered_project[0].description}
-                    </td>
-                    <td>
-                        {filtered_project[0].href}
-                    </td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Href</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            {filtered_project[0].name}
+                        </td>
+                        <td>
+                            {filtered_project[0].description}
+                        </td>
+                        <td>
+                            {filtered_project[0].href}
+                        </td>
+                    </tr>
+                </tbody>
             </table>
             <h3>Участники проекта</h3>
             <table>
-                <tr>
-                    <th>N</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>N</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
                     {filtered_project[0].users.map(function (user, i) {
                             return (
-                                <tr>
-                                    <th>
-                                        {i+1}
-                                    </th>
-                                    <th>
-                                        {user.username}
-                                    </th>
-                                    <th>
-                                        {user.email}
-                                    </th>
-                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            {i+1}
+                                        </td>
+                                        <td>
+                                            {user.username}
+                                        </td>
+                                        <td>
+                                            {user.email}
+                                        </td>
+                                    </tr>
+                                </tbody>
                             )
                         }
                     )
