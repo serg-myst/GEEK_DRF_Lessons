@@ -43,8 +43,15 @@ INSTALLED_APPS = [
 
     'todonotes',  # Lesson_3 Новое приложение
 
-    'django_filters', # Lesson_4 Обязательно для использования библиотеки pip install django-filter
+    'django_filters',  # Lesson_4 Обязательно для использования библиотеки pip install django-filter
 
+    'rest_framework.authtoken',
+    # Lesson_6 Авторизация по токену. После подключения выполнить миграции. python manage.py migrate
+    # Теперь у нас будет модель для хранения токена и таблица с соответствием пользователя (User) и его
+    # токена (Token).
+    # Таблица authtoken_token. Поля key, created, user_id
+
+    'rest_framework_simplejwt',  # Lesson_6
 ]
 
 MIDDLEWARE = [
@@ -152,7 +159,23 @@ REST_FRAMEWORK = {
     # Lesson_4 Подключаем пагинацию и фильтры
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 100
+    'PAGE_SIZE': 100,
+
+    # Lesson_6
+    # IsAuthenticated - только для авторизованных пользователей.
+    # Иначе ошибка: {"detail":"Authentication credentials were not provided."}
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # Lesson_6 JWT аутентификация
+
+    ],
 
     # ,
     # 'DEFAULT_PARSER_CLASSES': [
@@ -161,5 +184,5 @@ REST_FRAMEWORK = {
     #    'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
     #    'djangorestframework_camel_case.parser.CamelCaseJSONParser',
     #    # Any other parsers
-    # ],
+    #
 }

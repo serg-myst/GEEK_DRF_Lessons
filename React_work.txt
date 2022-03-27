@@ -1,0 +1,46 @@
+﻿
+Настройка командной строки в Sublime text 3:
+
+1. Tools - Command palette
+2. Пишем install Package control, если не установлено
+3. Tools - Command palette - terminus: open default shell in panel
+
+Настройка видимости директорий в Sublime text 3:
+
+https://fructcode.com/ru/qa/zdravstvujte-astcli/
+
+Настройка синтексиса для React в Sublime text 3:
+
+Установить расширение Bable. Настройка View - Syntax - Bable - JavaScript
+https://russianblogs.com/article/97511627992/
+
+React JWT: https://rajaraodv.medium.com/securing-react-redux-apps-with-jwt-tokens-fcfe81356ea0
+           https://habr.com/ru/post/340146/		
+
+
+Работа с REACT:
+
+https://www.taniarascia.com/getting-started-with-react/
+
+https://ru.reactjs.org/docs/getting-started.html
+
+1. Установить Node.js. https://nodejs.org/en/
+2. Войти в папку где надо создать приложение. В теримнале набрать: npx create-react-app <Мое приложение>
+3. Запуск проекта. Войти в папку с приложением (п.2) в командной строке набрать: npm started. Запуститься сервер по умолчанию - localhost:3000
+4. Остановить сервер: ctrl+C
+
+Подключение через CDN:
+
+<head>
+    <meta charset="utf-8" />
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+  </head>
+  
+  
+Начало работы:
+
+Используем className вместо class
+
