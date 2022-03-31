@@ -1,6 +1,8 @@
 import React from "react";
 import {Link, useParams} from 'react-router-dom'
 
+import Table from 'react-bootstrap/Table'
+
 
 const ProjectDetails = ({todo_projects}) => {
     let params = useParams()
@@ -12,7 +14,7 @@ const ProjectDetails = ({todo_projects}) => {
     return (
         <div>
             <h2>Подробно о проекте "{filtered_project[0].name}"</h2>
-            <table>
+            <Table responsive>
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -33,9 +35,9 @@ const ProjectDetails = ({todo_projects}) => {
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </Table>
             <h3>Участники проекта</h3>
-            <table>
+            <Table responsive>
                 <thead>
                     <tr>
                         <th>N</th>
@@ -62,7 +64,7 @@ const ProjectDetails = ({todo_projects}) => {
                         }
                     )
                     }
-            </table>
+            </Table>
             <div>
                 <Link to='/'>На главную</Link>
             </div>

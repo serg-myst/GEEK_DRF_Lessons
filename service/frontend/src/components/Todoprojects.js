@@ -1,6 +1,8 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 
+import Table from 'react-bootstrap/Table'
+
 const ProjectItem = (project, index) => {
     return (
         <tr key={index}>
@@ -24,7 +26,7 @@ const ProjectList = ({todo_projects}) => {
     return (
         <div>
             <h2>Список проектов</h2>
-            <table>
+            <Table striped responsive>
                 <thead key={'thead'}>
                     <tr>
                         <th>
@@ -63,7 +65,7 @@ const ProjectList = ({todo_projects}) => {
                     }
                 )
                 }
-            </table>
+            </Table>
             <div>
                 <Link to='/'>На главную</Link>
             </div>

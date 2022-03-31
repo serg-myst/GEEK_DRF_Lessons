@@ -24,7 +24,7 @@ from authapp.pagination import PaginationHandlerMixin
 # DjangoModelPermissionsOrReadOnly — аналогично DjangoModelPermissions, но с правом на
 # просмотр у пользователей, не обладающих другими правами.
 
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 # Create your views here.
