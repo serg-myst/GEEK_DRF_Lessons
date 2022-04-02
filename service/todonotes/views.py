@@ -24,6 +24,8 @@ from .filters import ProjectFilter, TodoNoteFilter  # Lesson_4 Работа с �
 
 from datetime import datetime
 
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
 
 # Create your views here.
 # Lesson_3
@@ -50,6 +52,7 @@ class ProjectModelViewSet(ModelViewSet):
     pagination_class = ProjectLimitOffsetPagination
     # parser_classes = (NoUnderscoreBeforeNumberCamelCaseJSONParser,)  # Lesson_3
     filterset_class = ProjectFilter
+    # permission_classes = [IsAuthenticated]
 
 
 class TodoNoteModelViewSet(ModelViewSet):
@@ -58,6 +61,7 @@ class TodoNoteModelViewSet(ModelViewSet):
     serializer_class = TodoNoteSerializer
     pagination_class = TodoNoteLimitOffsetPagination
     filterset_class = TodoNoteFilter
+    permission_classes = [IsAuthenticated]
 
 
 # Lesson_4 Запросы к таблицу Project построим на Generic Views

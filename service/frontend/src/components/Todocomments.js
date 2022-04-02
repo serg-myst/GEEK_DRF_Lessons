@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import Table from 'react-bootstrap/Table'
 
 const TodoItem = ({todo}) => {
     return (
@@ -24,7 +25,7 @@ const TodoList = ({todo_notes}) => {
     return (
         <div>
             <h2>Сообщения пользователей</h2>
-            <table>
+            <Table responsive>
                 <tr>
                     <th>
                         Project
@@ -40,7 +41,7 @@ const TodoList = ({todo_notes}) => {
                     </th>
                 </tr>
                 {todo_notes.map((todo) => <TodoItem todo={todo}/>)}
-            </table>
+            </Table>
              <div>
                 <Link to='/'>На главную</Link>
             </div>

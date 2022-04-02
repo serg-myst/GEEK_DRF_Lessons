@@ -1,6 +1,8 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 
+import Table from 'react-bootstrap/Table'
+
 const UserItem = ({user, index}) => {
     return (
         <tbody key={'tbody'}>
@@ -26,7 +28,7 @@ const UserList = ({todo_users}) => {
     return (
         <div>
             <h2>Список пользователей</h2>
-            <table>
+            <Table striped bordered hover size="sm">
                 <thead key={'thead'}>
                     <tr key={'tr'}>
                         <th>
@@ -44,7 +46,7 @@ const UserList = ({todo_users}) => {
                     </tr>
                 </thead>
                 {todo_users.map((user, i) => <UserItem user={user} index={i}/>)}
-            </table>
+            </Table>
              <div>
                 <Link to='/'>На главную</Link>
             </div>
