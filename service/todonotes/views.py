@@ -110,6 +110,7 @@ class ProjectAPIViewUpdate(UpdateAPIView):
     renderer_classes = [JSONRenderer]
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    # permission_classes = [IsAuthenticated]
 
 
 class ProjectAPIViewCreate(CreateAPIView):
