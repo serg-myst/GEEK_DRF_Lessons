@@ -4,7 +4,7 @@ from django.test import TestCase
 import json
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, force_authenticate, APIClient, APISimpleTestCase, APITestCase
-# from mixer.backend.django import mixer
+from mixer.backend.django import mixer
 from django.contrib.auth.models import User
 
 from .views import ProjectModelViewSet, TodoNoteModelViewSet
@@ -95,10 +95,49 @@ class TestTodoUsersAPIVIew(APITestCase):
     def test_edit_admin(self):
         test_user = TodoUser.objects.create(username='test111', birthday_year=1993, email='test1111@mail.ru')
         admin = TodoUser.objects.create_superuser('admin', 'admin@admin.com',
-                                              'admin123456')
+                                                  'admin123456')
         self.client.login(username='admin', password='admin123456')
         response = self.client.put(f'views/api-todo-users/{test_user.id}/',
-                                   {'id': test_user.id, 'username': 'test333', 'birthday_year': 1996, 'email': 'test333@mail.ru'})
+                                   {'id': test_user.id, 'username': 'test333', 'birthday_year': 1996,
+                                    'email': 'test333@mail.ru'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         user = TodoUser.objects.get(id=test_user.id)
         self.assertEqual(user.username, 'test333')
+
+
+# Тест TodoNote
+class TestTodoNoteAPIVIew(TestCase):
+
+    def setUp(self):
+        self.user = TodoUser.objects.create_superuser(
+            username='ron',
+            password='shippers',
+            email='ship@test.com'
+        )
+
+    #  Mixer. Обязательно pip install mixer
+    def test_edit_mixer(self):
+
+        # mixer создает случайные объекты в базе
+        user = mixer.blend(TodoUser)
+        project = mixer.blend(Project)
+
+        data = json.dumps({
+            'project': {'id': str(project.id)},
+            'user': {'id': str(user.id)},
+            'note_text': 'bla bla bla',
+            'create_timestamp': '2017-09-20T11:52:32-98'
+        })
+
+        client = APIClient()
+        client.force_authenticate(user=self.user)
+
+        print(str(project.id), project)
+
+        response = self.client.post('/api/todonotes-api/', data=data, content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # Проверим
+        todo = TodoNote.objects.get(note_text='bla bla bla')
+        print(todo.id)
+        self.assertEqual(todo.note_text, 'bla bla bla')
