@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     # Таблица authtoken_token. Поля key, created, user_id
 
     'rest_framework_simplejwt',  # Lesson_6
+
+    'drf_yasg',  # Lesson_9
 ]
 
 MIDDLEWARE = [
@@ -186,4 +188,14 @@ REST_FRAMEWORK = {
     #    'djangorestframework_camel_case.parser.CamelCaseJSONParser',
     #    # Any other parsers
     #
+
+    # Lesson_9
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',  # Указание версии в части URL-адреса
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',  # NamespaceVersioning
+
+    # Указание версии в параметре URL-адреса
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.QueryParameterVersioning',
+
+    # Указание версии в заголовках. Этот способ считается оптимальным
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning',
 }

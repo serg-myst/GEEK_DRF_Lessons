@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from .models import TodoUser
-from .serializers import AuthappModelSerializer
+from .serializers import AuthappModelSerializer, AuthappModelSerializerNewFields
+
+# Lesson_9
+from rest_framework import generics
 
 # Lesson_4
 from rest_framework.views import APIView
@@ -47,6 +50,22 @@ class TodoModelViewSet(ModelViewSet):
     pagination_class = TodoUsersLimitOffsetPagination  # Lesson_4
 
 
+# Lesson_9
+class TodoUsersListApiViewGeneric(generics.ListAPIView):
+    queryset = TodoUser.objects.all()
+    serializer_class = AuthappModelSerializer
+    permission_classes = [AllowAny]
+
+    # Получение версии через URL-адрес. Надо включить URLPathVersioning
+    # Получение версии через параметры URL-адрес. Надо включить QueryParameterVersioning
+    # Оба способа используют один метод get_serializer_class
+    def get_serializer_class(self):
+        print(f'Version {self.request.version}')
+        if self.request.version == '0.2':
+            return AuthappModelSerializerNewFields
+        return AuthappModelSerializer
+
+
 # Lesson_4
 # Наследуемся от класса APIView Это базовый класс для Views в DRF. Он может быть связан с
 # другими частями DRF (например, Renderers) и позволяет полностью самостоятельно написать код
@@ -61,6 +80,13 @@ class TodoUsersAPIVIew(APIView, PaginationHandlerMixin):
     permission_classes = [AllowAny]
 
     def get(self, request, format=None, *args, **kwargs):
+
+        # Lesson_9 От APIView переопределим здесь сериализатор
+        # C ApiView все не тривиально. Приходится прописывать руками
+        print(f'Version {self.request.version}')
+        if self.request.version == '0.2':
+            self.serializer_class = AuthappModelSerializerNewFields
+
         todo_users = TodoUser.objects.all()
         # serializer = AuthappModelSerializer(todo_users, context={'request': request}, many=True)
         # serializer = self.serializer_class(todo_users, many=True)
