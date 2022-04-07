@@ -110,6 +110,7 @@ class ProjectAPIViewUpdate(UpdateAPIView):
     renderer_classes = [JSONRenderer]
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    # permission_classes = [IsAuthenticated]
 
 
 class ProjectAPIViewCreate(CreateAPIView):
@@ -153,7 +154,7 @@ class ProjectAPIViewDetail(RetrieveAPIView):
 # Lesson_4 CRUD для TodoNote
 # https://www.django-rest-framework.org/api-guide/viewsets/
 class TodoNoteAPIViewSet(viewsets.ViewSet):
-    # renderer_classes = [JSONRenderer]
+    renderer_classes = [JSONRenderer]
     pagination_class = TodoNoteLimitOffsetPagination
 
     def get_date_from_str(self, date):

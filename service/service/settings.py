@@ -166,11 +166,12 @@ REST_FRAMEWORK = {
     # Иначе ошибка: {"detail":"Authentication credentials were not provided."}
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        'rest_framework.permissions.IsAuthenticated',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
 
         'rest_framework_simplejwt.authentication.JWTAuthentication',  # Lesson_6 JWT аутентификация

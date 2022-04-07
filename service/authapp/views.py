@@ -76,12 +76,12 @@ class TodoUsersAPIVIew(APIView, PaginationHandlerMixin):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # Lesson_4 Запрос на запись данных в базу POST. Здесь для примера по ТЗ не нужен
-    # def post(self, request, format=None):
-    #    serializer = AuthappModelSerializer(data=request.data, context={'request': request})
-    #    if serializer.is_valid():
-    #        serializer.save()
-    #        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, format=None):
+        serializer = AuthappModelSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Lesson_4 Вывод по деталям
