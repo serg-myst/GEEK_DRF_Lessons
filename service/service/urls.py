@@ -32,6 +32,9 @@ from drf_yasg import openapi
 from rest_framework import permissions
 from django.urls import re_path  # Lesson_9
 
+# Lesson_10
+from graphene_django.views import GraphQLView
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Library",
@@ -85,5 +88,13 @@ urlpatterns = [
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
+    # Lesson_10
+    # Параметр graphiql определяет, показывать или нет веб-интерфейс для удобного тестирования
+    # GraphQL-запросов. Мы указали True, так как будем им пользоваться для проверки работоспособности
+    # нашей схемы.
+    # Внимание! В отличие от множества URL-адресов для REST API, все запросы будут
+    # обрабатываться всего на одном адресе, который принято называть graphql.
+    path("graphql/", GraphQLView.as_view(graphiql=True)),
 
 ]

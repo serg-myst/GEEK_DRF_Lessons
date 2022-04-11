@@ -36,6 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # На django 4.0 Будет ошибка при старте сервере
+    # Лекарство: https://stackoverflow.com/questions/70382084/import-error-force-text-from-django-utils-encoding
+    'graphene_django',  # Lesson_10 Требуется установить pip install graphene-django
+
     'rest_framework',  # Lesson_1 подключаем установленное приложение Django-REST
     'authapp',  # Lesson_1 подключаем новое приложение (django-admin startapp authapp)
 
@@ -54,6 +58,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',  # Lesson_6
 
     'drf_yasg',  # Lesson_9
+
 ]
 
 MIDDLEWARE = [
@@ -198,4 +203,9 @@ REST_FRAMEWORK = {
 
     # Указание версии в заголовках. Этот способ считается оптимальным
     # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning',
+}
+
+# Lesson_10 путь до объекта с описанием схемы. В нашем случае мы создадим файл schema.py в папке с настройками проекта
+GRAPHENE = {
+    'SCHEMA': 'service.schema.schema'
 }
