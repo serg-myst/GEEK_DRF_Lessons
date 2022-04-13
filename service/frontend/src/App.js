@@ -132,6 +132,29 @@ class App extends React.Component {
     // <UserList todo_users={this.state.todo_users} />
     // <ProjectList todo_projects={this.state.todo_projects} />
 
+    get_headers() {
+        let headers = {
+            'Content-Type': 'application/json',
+            /* 'Access-Control-Allow-Headers': 'Content-Type' */
+        }
+
+        if (this.is_authenticated()) {
+            headers['Authorization'] = 'Token ' + this.state.token
+        }
+        return headers
+    }
+
+    /* Lesson_11 Функция удалить проект. Будем передавать в Totoprojects */
+    deleteProject(id) {
+        const headers = this.get_headers()
+        console.log(headers)
+        axios.delete(`http://127.0.0.1:8000/generic/api-projects/delete/${id}`, {headers})
+        .then(response => {
+        this.setState({todo_projects: this.state.todo_projects.filter((item)=>item.id !==
+        id)})
+        }).catch(error => console.log(error))
+    }
+
     /* Lesson_7 */
     set_token(token) {
         const cookies = new Cookies()
@@ -159,17 +182,6 @@ class App extends React.Component {
     logout() {
         this.set_token('')
         this.set_user('')
-    }
-
-    get_headers() {
-        let headers = {
-            'Content-Type': 'application/json'
-        }
-
-        if (this.is_authenticated()) {
-            headers['Authorization'] = 'Token ' + this.state.token
-        }
-        return headers
     }
 
     get_token_from_storage() {
@@ -257,7 +269,7 @@ class App extends React.Component {
                         <Route exact path='/users' component={() => <UserList todo_users={this.state.todo_users}/>}/>
                         <Route path='/project/:id'><ProjectDetails todo_projects={this.state.todo_projects}/></Route>
                         <Route exact path='/projects'
-                               component={() => <ProjectList todo_projects={this.state.todo_projects}/>}/>
+                               component={() => <ProjectList todo_projects={this.state.todo_projects}  deleteProject={(id)=>this.deleteProject(id)}/>}/>
                         <Route exact path='/todo' component={() => <TodoList todo_notes={this.state.todo_notes}/>}/>
                         <Route component={NotFound404}/>
                     </Switch>
