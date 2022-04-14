@@ -9,6 +9,7 @@ import TodoList from './components/Todocomments.js'
 import Header from './components/Header.js'
 import Footer from './components/Footer.js'
 import ProjectDetails from './components/ProjectDetails.js'
+import ProjectForm from './components/ProjectForm.js'
 import axios from 'axios'
 
 /* Lesson_7 */
@@ -155,6 +156,19 @@ class App extends React.Component {
         }).catch(error => console.log(error))
     }
 
+    /* Lesson_11 Функция создать проект. Будем передавать в Totoprojects */
+    createProject(name, user) {
+        const headers = this.get_headers()
+        const data = {name: name, users: {'id': user}}
+        console.log(data)
+        axios.post(`http://127.0.0.1:8000/api/todoprojects/`, data, {headers})
+        .then(response => {
+        let newProject = response.data
+        const project = this.state.todo_projects.filter((item) => item.id === newProject.project)[0]
+        newProject.project = project
+        this.setState({todo_projects: [...this.state.todo_projects, newProject]})
+        }).catch(error => console.log(error))
+    }
     /* Lesson_7 */
     set_token(token) {
         const cookies = new Cookies()
@@ -271,6 +285,7 @@ class App extends React.Component {
                         <Route exact path='/projects'
                                component={() => <ProjectList todo_projects={this.state.todo_projects}  deleteProject={(id)=>this.deleteProject(id)}/>}/>
                         <Route exact path='/todo' component={() => <TodoList todo_notes={this.state.todo_notes}/>}/>
+                        <Route exact path='/projects/create' component={() => <ProjectForm createProject={(name, user) => this.createProject(name, user)}/>}/>
                         <Route component={NotFound404}/>
                     </Switch>
                 </div>

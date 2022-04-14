@@ -73,6 +73,7 @@ const ProjectList = ({todo_projects, deleteProject}) => {
                 )
                 }
             </Table>
+            <Link to='/projects/create'>Создать</Link>
             <div>
                 <Link to='/'>На главную</Link>
             </div>
