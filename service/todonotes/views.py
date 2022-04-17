@@ -61,7 +61,7 @@ class TodoNoteModelViewSet(ModelViewSet):
     serializer_class = TodoNoteSerializer
     pagination_class = TodoNoteLimitOffsetPagination
     filterset_class = TodoNoteFilter
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
 
 # Lesson_4 Запросы к таблицу Project построим на Generic Views
@@ -135,9 +135,12 @@ class ProjectAPIViewCreate(CreateAPIView):
     #    ]
     # }
     def create(self, request):
-        data = request.data['users']
-        project = Project.objects.create(name=data['name'], href=data['href'], description=data['description'])
-        for user in data:
+        datausers = request.data['users']
+        dataproject = request.data
+        print(dataproject)
+        project = Project.objects.create(name=dataproject['name'], href=dataproject['href'],
+                                         description=dataproject['description'])
+        for user in datausers:
             project.users.add(TodoUser.objects.get(id=user['id']))
         project.save()
         return Response(status=status.HTTP_201_CREATED)
