@@ -59,54 +59,54 @@ class ProjectForm extends React.Component {
     }
 
     render() {
-    const isLength = this.state.isLength;
-    let text
-    if (isLength === 0) {
-        text = <this.NoSelectedUsers/>
-    } else {
-        text = <this.SelectedUser  Project_users={this.state.Project_users}/>
-    }
-
-    return (
-        <form onSubmit={(event)=> this.handleSubmit(event)}>
-            <div className="form-group">
-                <label htmlFor="login">Название проекта</label>
-                <input type="text" className="form-control" name="name"
-                value={this.state.name} onChange={(event)=>this.handleChange(event)} />
-            </div>
-             <div className="form-group">
-                <label htmlFor="href">Ссылка на проект</label>
-                <input type="text" className="form-control" name="href"
-                value={this.state.href} onChange={(event)=>this.handleChange(event)} />
-            </div>
-             <div className="form-group">
-                <label htmlFor="description">Описание проекта</label>
-                <input type="text" className="form-control" name="description"
-                value={this.state.description} onChange={(event)=>this.handleChange(event)} />
-            </div>
-             <div>
-                <h4>Пользователи проектов</h4>
-                <h4>Кликните по пользователю, чтобы добавить его в новый проект</h4>
-                <select name="select" size="10" onClick={(event) => this.onClickUser(event)}>
-                    {this.props.todo_users.map(function(user){
-                        return(
-                        <option id={user.id} name='user'>{user.username} | {user.email}</option>
-                        )
-                    })
-                    }
-                </select>
-            </div>
-            <div>
-                <h4>Пользователи проекта</h4>
-                {text}
-            </div>
-         <input type="submit" className="btn btn-primary" value="Save" />
-            <div>
-                <Link to='/projects'>К списку проектов</Link>
-            </div>
-        </form>
-        );
+        const isLength = this.state.isLength;
+        let text
+        if (isLength === 0) {
+            text = <this.NoSelectedUsers/>
+        } else {
+            text = <this.SelectedUser  Project_users={this.state.Project_users}/>
         }
+
+        return (
+            <form onSubmit={(event)=> this.handleSubmit(event)}>
+                <div className="form-group">
+                    <label htmlFor="login">Название проекта</label>
+                    <input type="text" className="form-control" name="name"
+                    value={this.state.name} onChange={(event)=>this.handleChange(event)} />
+                </div>
+                 <div className="form-group">
+                    <label htmlFor="href">Ссылка на проект</label>
+                    <input type="text" className="form-control" name="href"
+                    value={this.state.href} onChange={(event)=>this.handleChange(event)} />
+                </div>
+                 <div className="form-group">
+                    <label htmlFor="description">Описание проекта</label>
+                    <input type="text" className="form-control" name="description"
+                    value={this.state.description} onChange={(event)=>this.handleChange(event)} />
+                </div>
+                 <div>
+                    <h4>Пользователи проектов</h4>
+                    <h4>Кликните по пользователю, чтобы добавить его в новый проект</h4>
+                    <select name="select" size="10" onClick={(event) => this.onClickUser(event)}>
+                        {this.props.todo_users.map(function(user){
+                            return(
+                            <option id={user.id} name='user'>{user.username} | {user.email}</option>
+                            )
+                        })
+                        }
+                    </select>
+                </div>
+                <div>
+                    <h4>Пользователи проекта</h4>
+                    {text}
+                </div>
+             <input type="submit" className="btn btn-primary" value="Save" />
+                <div>
+                    <Link to='/projects'>К списку проектов</Link>
+                </div>
+            </form>
+            );
+            }
 }
 
 export default ProjectForm

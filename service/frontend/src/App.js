@@ -10,6 +10,7 @@ import Header from './components/Header.js'
 import Footer from './components/Footer.js'
 import ProjectDetails from './components/ProjectDetails.js'
 import ProjectForm from './components/ProjectForm.js'
+import TodoForm from './components/TodoForm.js'
 import axios from 'axios'
 
 /* Lesson_7 */
@@ -153,6 +154,12 @@ class App extends React.Component {
         this.setState({todo_notes: this.state.todo_notes.filter((item)=>item.id !==
         id)})
         }).catch(error => console.log(error))
+    }
+
+    /* Lesson_11 Создаем заметку*/
+    createTodo(project, note_text, user) {
+
+
     }
 
     /* Lesson_11 Функция удалить проект. Будем передавать в Totoprojects */
@@ -299,6 +306,7 @@ class App extends React.Component {
                                component={() => <ProjectList todo_projects={this.state.todo_projects}  deleteProject={(id)=>this.deleteProject(id)}/>}/>
                         <Route exact path='/todo' component={() => <TodoList todo_notes={this.state.todo_notes} deleteTodo={(id)=>this.deleteTodo(id)}/>}/>
                         <Route exact path='/projects/create' component={() => <ProjectForm todo_users={this.state.todo_users} createProject={(name, href, description, user) => this.createProject(name, href, description, user)}/>}/>
+                        <Route exact path='/todo/create' component={() => <TodoForm todo_users={this.state.todo_users} todo_projects={this.state.todo_projects} createTodo={(project, note_text, user) => this.createProject(project, note_text, user)}/>}/>
                         <Route component={NotFound404}/>
                     </Switch>
                 </div>
