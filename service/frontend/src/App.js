@@ -46,17 +46,6 @@ const MainPage = () => {
     )
 }
 
-const Main = () => {
-    return (
-        <div>
-            <Header/>
-            <MainPage/>
-            <h1>ГЛАВНАЯ СТРАНИЦА</h1>
-            <Footer/>
-        </div>
-    )
-}
-
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -66,6 +55,8 @@ class App extends React.Component {
             'todo_notes': [],
             'token': [],
             'user': [],
+            'redirect': false,
+            'id':''
         }
     }
 
@@ -133,6 +124,29 @@ class App extends React.Component {
     // Lesson 5 Убрали, т.к. используем роутеры
     // <UserList todo_users={this.state.todo_users} />
     // <ProjectList todo_projects={this.state.todo_projects} />
+
+    searchProject() {
+        let projectName = document.getElementById('search_project').value
+        let todo_projects = this.state.todo_projects.filter(project => project.name.includes(projectName))
+        if (todo_projects.length > 0) {
+            this.setState({'redirect': true})
+            this.setState({'todo_projects': todo_projects})
+            /* this.setState({id: todo_projects[0].id}) */
+       } else {this.setState({'redirect': true})
+             /* this.setState({id: ''}) */
+       }
+    }
+
+    MainPage(searchProject) {
+    return (
+            <div>
+                <Header/>
+                <MainPage/>
+                <h1>ГЛАВНАЯ СТРАНИЦА</h1>
+                <Footer/>
+            </div>
+        )
+    }
 
     get_headers() {
         let headers = {
@@ -284,6 +298,13 @@ class App extends React.Component {
 
 
     render() {
+        let textRedirect = ''
+        console.log(this.state.redirect)
+        if (this.state.redirect) {
+            this.setState({redirect: false})
+            /* textRedirect = <Redirect to={`project/${this.state.id}`} /> */
+            textRedirect = <Redirect to='/projects' />
+        }
         return (
             <BrowserRouter>
                 <div className='App'>
@@ -297,8 +318,13 @@ class App extends React.Component {
                             </li>
                         </ul>
                     </nav>
-                    <Switch>
-                        <Route exact path='/' component={Main}/>
+                    <div>
+                        <label htmlFor="search">Поиск проекта</label>
+                        <input type="text" className="form"  id="search_project" placeholder="Введите название проекта"/>
+                        <input type="submit" className="btn btn-primary" value="Search" onClick={() => this.searchProject()}/>
+                    </div>
+                  <Switch>
+                        <Route exact path='/' component={this.MainPage}/>
                         <Route exect path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)} />} />
                         <Route exact path='/users' component={() => <UserList todo_users={this.state.todo_users}/>}/>
                         <Route path='/project/:id'><ProjectDetails todo_projects={this.state.todo_projects}/></Route>
@@ -310,6 +336,7 @@ class App extends React.Component {
                         <Route component={NotFound404}/>
                     </Switch>
                 </div>
+                {textRedirect}
             </BrowserRouter>)
     }
 }
