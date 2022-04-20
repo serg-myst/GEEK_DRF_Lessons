@@ -12,12 +12,16 @@ class TodoForm extends React.Component {
     handleChange(event){
         let Todo = this.state.Todo
         Todo[event.target.name] = event.target.value
-        console.log(Todo)
         this.setState(
         {
             Todo
         }
         );
+    }
+
+    handleSubmit(event) {
+       this.props.createTodo(this.state.Todo.project, this.state.Todo.note_text, this.state.Todo.user)
+       event.preventDefault()
     }
 
     Line() {
@@ -32,7 +36,7 @@ class TodoForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={(event)=> this.handleSubmit(event)}>
+            <form onSubmit={(event)=>this.handleSubmit(event)}>
                 <h2>Заметка. Необходимо выбрать проект, пользователя и заполнить текст сообщения</h2>
                 <div className="form-group">
                     <label htmlFor="project">Выберите проект</label>
