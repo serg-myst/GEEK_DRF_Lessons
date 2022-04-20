@@ -9,6 +9,8 @@ import TodoList from './components/Todocomments.js'
 import Header from './components/Header.js'
 import Footer from './components/Footer.js'
 import ProjectDetails from './components/ProjectDetails.js'
+import ProjectForm from './components/ProjectForm.js'
+import TodoForm from './components/TodoForm.js'
 import axios from 'axios'
 
 /* Lesson_7 */
@@ -44,17 +46,6 @@ const MainPage = () => {
     )
 }
 
-const Main = () => {
-    return (
-        <div>
-            <Header/>
-            <MainPage/>
-            <h1>ГЛАВНАЯ СТРАНИЦА</h1>
-            <Footer/>
-        </div>
-    )
-}
-
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -64,6 +55,8 @@ class App extends React.Component {
             'todo_notes': [],
             'token': [],
             'user': [],
+            'redirect': false,
+            'id':''
         }
     }
 
@@ -132,6 +125,86 @@ class App extends React.Component {
     // <UserList todo_users={this.state.todo_users} />
     // <ProjectList todo_projects={this.state.todo_projects} />
 
+    searchProject() {
+          this.setState({redirect: true})
+            /* this.setState({id: todo_projects[0].id}) */
+            /* this.setState({id: ''}) */
+    }
+
+    MainPage(searchProject) {
+    return (
+            <div>
+                <Header/>
+                <MainPage/>
+                <h1>ГЛАВНАЯ СТРАНИЦА</h1>
+                <Footer/>
+            </div>
+        )
+    }
+
+    get_headers() {
+        let headers = {
+            'Content-Type': 'application/json',
+            /* 'Access-Control-Allow-Headers': 'Content-Type' */
+        }
+
+        if (this.is_authenticated()) {
+            headers['Authorization'] = 'Token ' + this.state.token
+        }
+        return headers
+    }
+
+    /* Lesson_11 Функция удалить заметку. Будем передавать в Todocomments */
+    deleteTodo(id) {
+        const headers = this.get_headers()
+        axios.delete(`http://127.0.0.1:8000/api/todonotes-api/${id}`, {headers})
+        .then(response => {
+        this.setState({todo_notes: this.state.todo_notes.filter((item)=>item.id !==
+        id)})
+        }).catch(error => console.log(error))
+    }
+
+    /* Lesson_11 Создаем заметку*/
+    createTodo(project, note_text, user) {
+        const headers = this.get_headers()
+        const data = {project: {id: project}, note_text: note_text, user: {id: user}}
+        console.log(data)
+        axios.post('http://127.0.0.1:8000/api/todonotes-api/', data, {headers})
+        .then(response => {
+        let newTodo = response.data
+        console.log(newTodo)
+        const todo = this.state.todo_notes.filter((item) => item.id === newTodo.id)[0]
+        newTodo.project = todo
+        this.setState({todo_notes: [...this.state.todo_notes, newTodo]})
+        }).catch(error => console.log(error))
+    }
+
+    /* Lesson_11 Функция удалить проект. Будем передавать в Totoprojects */
+    deleteProject(id) {
+        const headers = this.get_headers()
+        console.log(headers)
+        axios.delete(`http://127.0.0.1:8000/generic/api-projects/delete/${id}`, {headers})
+        .then(response => {
+        this.setState({todo_projects: this.state.todo_projects.filter((item)=>item.id !==
+        id)})
+        }).catch(error => console.log(error))
+    }
+
+    /* Lesson_11 Функция создать проект. Будем передавать в Totoprojects */
+    createProject(name, href, description, user) {
+        const headers = this.get_headers()
+        let users = []
+        user.forEach((el) => users.push({'id': el}))
+        const data = {name: name, href: href, description: description, users: users}
+        /* console.log(headers) */
+        axios.post('http://127.0.0.1:8000/generic/api-projects/create/', data, {headers})
+        .then(response => {
+        let newProject = response.data
+        const project = this.state.todo_projects.filter((item) => item.id === newProject.project)[0]
+        newProject.project = project
+        this.setState({todo_projects: [...this.state.todo_projects, newProject]})
+        }).catch(error => console.log(error))
+    }
     /* Lesson_7 */
     set_token(token) {
         const cookies = new Cookies()
@@ -161,17 +234,6 @@ class App extends React.Component {
         this.set_user('')
     }
 
-    get_headers() {
-        let headers = {
-            'Content-Type': 'application/json'
-        }
-
-        if (this.is_authenticated()) {
-            headers['Authorization'] = 'Token ' + this.state.token
-        }
-        return headers
-    }
-
     get_token_from_storage() {
         const cookies = new Cookies()
         const token = cookies.get('token')
@@ -185,6 +247,7 @@ class App extends React.Component {
         this.setState({'todo_projects': todo_projects})
         let todo_users = []
         this.setState({'todo_users': todo_users})
+        this.setState({'redirect': false})
     }
 
     load_data() {
@@ -238,6 +301,17 @@ class App extends React.Component {
 
 
     render() {
+        console.log(this.state.redirect)
+        let textRedirect = ''
+        let todo_projects = this.state.todo_projects
+        let projectName = document.getElementById('search_project')
+        if (projectName != null) {
+         if (projectName.value != '') {
+             todo_projects = this.state.todo_projects.filter(project => project.name.includes(projectName.value))
+            /* textRedirect = <Redirect to={`project/${this.state.id}`} /> */
+            textRedirect = <Redirect to='/projects' />
+            projectName.value = ''
+            }}
         return (
             <BrowserRouter>
                 <div className='App'>
@@ -251,17 +325,25 @@ class App extends React.Component {
                             </li>
                         </ul>
                     </nav>
-                    <Switch>
-                        <Route exact path='/' component={Main}/>
+                    <div>
+                        <label htmlFor="search">Поиск проекта</label>
+                        <input type="text" className="form"  id="search_project" placeholder="Введите название проекта"/>
+                        <input type="submit" className="btn btn-primary" value="Search" onClick={() => this.searchProject()}/>
+                    </div>
+                  <Switch>
+                        <Route exact path='/' component={this.MainPage}/>
                         <Route exect path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)} />} />
                         <Route exact path='/users' component={() => <UserList todo_users={this.state.todo_users}/>}/>
-                        <Route path='/project/:id'><ProjectDetails todo_projects={this.state.todo_projects}/></Route>
+                        <Route path='/project/:id'><ProjectDetails todo_projects={todo_projects}/></Route>
                         <Route exact path='/projects'
-                               component={() => <ProjectList todo_projects={this.state.todo_projects}/>}/>
-                        <Route exact path='/todo' component={() => <TodoList todo_notes={this.state.todo_notes}/>}/>
+                               component={() => <ProjectList todo_projects={todo_projects}  deleteProject={(id)=>this.deleteProject(id)}/>}/>
+                        <Route exact path='/todo' component={() => <TodoList todo_notes={this.state.todo_notes} deleteTodo={(id)=>this.deleteTodo(id)}/>}/>
+                        <Route exact path='/projects/create' component={() => <ProjectForm todo_users={this.state.todo_users} createProject={(name, href, description, user) => this.createProject(name, href, description, user)}/>}/>
+                        <Route exact path='/todo/create' component={() => <TodoForm todo_users={this.state.todo_users} todo_projects={this.state.todo_projects} createTodo={(project, note_text, user) => this.createTodo(project, note_text, user)}/>}/>
                         <Route component={NotFound404}/>
                     </Switch>
                 </div>
+                {textRedirect}
             </BrowserRouter>)
     }
 }

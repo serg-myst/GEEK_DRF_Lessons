@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 
 import Table from 'react-bootstrap/Table'
 
+/* Не используется. Весь вывод в ProjectList
 const ProjectItem = (project, index) => {
     return (
         <tr key={index}>
@@ -21,8 +22,9 @@ const ProjectItem = (project, index) => {
         </tr>
     )
 }
+ */
 
-const ProjectList = ({todo_projects}) => {
+const ProjectList = ({todo_projects, deleteProject}) => {
     return (
         <div>
             <h2>Список проектов</h2>
@@ -59,6 +61,11 @@ const ProjectList = ({todo_projects}) => {
                                     <td>
                                         {project.description}
                                     </td>
+                                    <td>{project.id}</td>
+
+                                    <td>
+                                        <button type='button' onClick={()=>deleteProject(project.id)}>Удалить</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         )
@@ -66,6 +73,7 @@ const ProjectList = ({todo_projects}) => {
                 )
                 }
             </Table>
+            <Link to='/projects/create'>Создать</Link>
             <div>
                 <Link to='/'>На главную</Link>
             </div>

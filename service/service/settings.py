@@ -64,15 +64,12 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Lesson_2 Обязательно, иначе бэк и фронт работать не будут
+    'django.middleware.common.CommonMiddleware',  # Lesson_2 Обязательно, иначе бэк и фронт работать не будут
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'corsheaders.middleware.CorsMiddleware',  # Lesson_2 Обязательно, иначе бэк и фронт работать не будут
-    'django.middleware.common.CommonMiddleware',  # Lesson_2 Обязательно, иначе бэк и фронт работать не будут
-
 ]
 
 ROOT_URLCONF = 'service.urls'
@@ -145,7 +142,8 @@ AUTH_USER_MODEL = 'authapp.TodoUser'
 
 # Lesson_2 Обязательно, иначе бэк и фронт работать не будут
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
 ]
 
 # Lesson_3
@@ -172,16 +170,16 @@ REST_FRAMEWORK = {
     # IsAuthenticated - только для авторизованных пользователей.
     # Иначе ошибка: {"detail":"Authentication credentials were not provided."}
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        # 'rest_framework.permissions.IsAuthenticated',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
 
-        'rest_framework_simplejwt.authentication.JWTAuthentication',  # Lesson_6 JWT аутентификация
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',  # Lesson_6 JWT аутентификация
 
     ],
 
