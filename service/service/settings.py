@@ -102,9 +102,11 @@ DATABASES = {
     # }
 
     'default': {
-        'NAME': 'geekdrf',
+        'NAME': 'service',
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
