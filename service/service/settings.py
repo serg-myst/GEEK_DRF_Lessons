@@ -212,6 +212,6 @@ REST_FRAMEWORK = {
 }
 
 # Lesson_10 путь до объекта с описанием схемы. В нашем случае мы создадим файл schema.py в папке с настройками проекта
-GRAPHENE = {
-    'SCHEMA': 'service.schema.schema'
-}
+#GRAPHENE = {
+#    'SCHEMA': 'service.schema.schema'
+#}
