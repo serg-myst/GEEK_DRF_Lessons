@@ -95,6 +95,6 @@ urlpatterns = [
     # нашей схемы.
     # Внимание! В отличие от множества URL-адресов для REST API, все запросы будут
     # обрабатываться всего на одном адресе, который принято называть graphql.
-    path("graphql/", GraphQLView.as_view(graphiql=True)),
+    # path("graphql/", GraphQLView.as_view(graphiql=True)),
 
 ]
