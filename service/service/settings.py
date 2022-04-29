@@ -38,7 +38,7 @@ INSTALLED_APPS = [
 
     # На django 4.0 Будет ошибка при старте сервере
     # Лекарство: https://stackoverflow.com/questions/70382084/import-error-force-text-from-django-utils-encoding
-    'graphene_django',  # Lesson_10 Требуется установить pip install graphene-django
+    # 'graphene_django',  # Lesson_10 Требуется установить pip install graphene-django
 
     'rest_framework',  # Lesson_1 подключаем установленное приложение Django-REST
     'authapp',  # Lesson_1 подключаем новое приложение (django-admin startapp authapp)
