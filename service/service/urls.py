@@ -33,7 +33,7 @@ from rest_framework import permissions
 from django.urls import re_path  # Lesson_9
 
 # Lesson_10
-from graphene_django.views import GraphQLView
+# from graphene_django.views import GraphQLView
 
 schema_view = get_schema_view(
     openapi.Info(
