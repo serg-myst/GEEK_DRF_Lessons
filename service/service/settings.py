@@ -150,10 +150,15 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'authapp.TodoUser'
 
 # Lesson_2 Обязательно, иначе бэк и фронт работать не будут
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-]
+# CORS_ALLOWED_ORIGINS = [
+#    'http://localhost:3000',
+#    'http://127.0.0.1:3000',
+#]
+
+# Lesson_12 Переводим на реальный сервер
+CORS_ALLOWED_ORIGINS = True
+CORS_ALLOWED_CREDENTIALS = True
+
 
 # Lesson_3
 # Для CamelCase https://github.com/vbabiy/djangorestframework-camel-case
