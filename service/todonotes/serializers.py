@@ -6,7 +6,7 @@ from authapp.serializers import AuthappModelSerializer
 
 
 class ProjectSerializer(ModelSerializer):
-    users = AuthappModelSerializer(read_only=True ,many=True)  # Lesson_3 Важно для полей ManyToManyField. Выводит все значения.
+    users = AuthappModelSerializer(many=True)  # Lesson_3 Важно для полей ManyToManyField. Выводит все значения.
 
     # read_only=True - позволяет добавить запись без пользователей. Не совсем понятно.
     # Ведь связи по пользоватлеям это отдельная таблица
@@ -26,4 +26,4 @@ class TodoNoteSerializer(ModelSerializer):
 
     class Meta:
         model = TodoNote
-        fields = ('id', 'project', 'user', 'note_text', 'create_timestamp')
+        fields = ('project', 'user', 'note_text', 'create_timestamp')

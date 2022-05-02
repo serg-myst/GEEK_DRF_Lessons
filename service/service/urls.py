@@ -33,7 +33,7 @@ from rest_framework import permissions
 from django.urls import re_path  # Lesson_9
 
 # Lesson_10
-from graphene_django.views import GraphQLView
+# from graphene_django.views import GraphQLView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -95,6 +95,6 @@ urlpatterns = [
     # нашей схемы.
     # Внимание! В отличие от множества URL-адресов для REST API, все запросы будут
     # обрабатываться всего на одном адресе, который принято называть graphql.
-    path("graphql/", GraphQLView.as_view(graphiql=True)),
+    # path("graphql/", GraphQLView.as_view(graphiql=True)),
 
 ]

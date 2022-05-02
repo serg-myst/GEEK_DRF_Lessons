@@ -22,9 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'blh!qzf_k6+luy9o+g#gvgk1yyj*hyjmh3_pvezs7y20%%%d%c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
 
     # На django 4.0 Будет ошибка при старте сервере
     # Лекарство: https://stackoverflow.com/questions/70382084/import-error-force-text-from-django-utils-encoding
-    'graphene_django',  # Lesson_10 Требуется установить pip install graphene-django
+    # 'graphene_django',  # Lesson_10 Требуется установить pip install graphene-django
 
     'rest_framework',  # Lesson_1 подключаем установленное приложение Django-REST
     'authapp',  # Lesson_1 подключаем новое приложение (django-admin startapp authapp)
@@ -96,9 +96,18 @@ WSGI_APPLICATION = 'service.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'service',
+        'USER': 'serg',
+        'PASSWORD': 'serg123456',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
@@ -141,9 +150,19 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'authapp.TodoUser'
 
 # Lesson_2 Обязательно, иначе бэк и фронт работать не будут
+# CORS_ALLOWED_ORIGINS = [
+#    'http://localhost:3000',
+#    'http://127.0.0.1:3000',
+# ]
+
+# Lesson_12 Переводим на реальный сервер
+# CORS_ALLOWED_ALL_ORIGINS = True
+# CORS_ALLOWED_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
+    'http://5.63.159.42:8000',
+    'http://5.63.159.42:8080',
+    'http://5.63.159.42:80',
 ]
 
 # Lesson_3
@@ -204,6 +223,6 @@ REST_FRAMEWORK = {
 }
 
 # Lesson_10 путь до объекта с описанием схемы. В нашем случае мы создадим файл schema.py в папке с настройками проекта
-GRAPHENE = {
-    'SCHEMA': 'service.schema.schema'
-}
+# GRAPHENE = {
+#    'SCHEMA': 'service.schema.schema'
+# }

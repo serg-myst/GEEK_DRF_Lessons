@@ -1,5 +1,6 @@
 # Lesson_10
 
+'''
 import graphene
 from graphene_django import DjangoObjectType
 from todonotes.models import Project, TodoNote
@@ -75,6 +76,7 @@ class Mutation(graphene.ObjectType):
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
+'''
 
 '''
 Пример запроса
