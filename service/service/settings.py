@@ -153,12 +153,16 @@ AUTH_USER_MODEL = 'authapp.TodoUser'
 # CORS_ALLOWED_ORIGINS = [
 #    'http://localhost:3000',
 #    'http://127.0.0.1:3000',
-#]
+# ]
 
 # Lesson_12 Переводим на реальный сервер
-CORS_ALLOWED_ALL_ORIGINS = True
-CORS_ALLOWED_CREDENTIALS = True
+# CORS_ALLOWED_ALL_ORIGINS = True
+# CORS_ALLOWED_CREDENTIALS = True
 
+CORS_ALLOWED_ORIGINS = [
+    'http://5.63.159.42:8000',
+    'http://5.63.159.42:8080',
+]
 
 # Lesson_3
 # Для CamelCase https://github.com/vbabiy/djangorestframework-camel-case
@@ -218,6 +222,6 @@ REST_FRAMEWORK = {
 }
 
 # Lesson_10 путь до объекта с описанием схемы. В нашем случае мы создадим файл schema.py в папке с настройками проекта
-#GRAPHENE = {
+# GRAPHENE = {
 #    'SCHEMA': 'service.schema.schema'
-#}
+# }
