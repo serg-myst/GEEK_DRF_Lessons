@@ -162,6 +162,7 @@ AUTH_USER_MODEL = 'authapp.TodoUser'
 CORS_ALLOWED_ORIGINS = [
     'http://5.63.159.42:8000',
     'http://5.63.159.42:8080',
+    'http://5.63.159.42:80',
 ]
 
 # Lesson_3
