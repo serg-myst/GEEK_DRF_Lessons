@@ -156,7 +156,7 @@ AUTH_USER_MODEL = 'authapp.TodoUser'
 #]
 
 # Lesson_12 Переводим на реальный сервер
-CORS_ALLOWED_ORIGINS = True
+CORS_ALLOWED_ALL_ORIGINS = True
 CORS_ALLOWED_CREDENTIALS = True
 
 
